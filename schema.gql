@@ -1,0 +1,25 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""client """
+type Client {
+  idMeeting: String!
+  idUser: Float!
+  idSession: Float!
+  token: String!
+}
+
+type Query {
+  listClients(token: String!): [Client!]!
+}
+
+type Mutation {
+  addClient(newClientData: CreateClient!): Client!
+  removeClient(token: String!): Boolean!
+}
+
+input CreateClient {
+  idMeeting: String!
+  idUser: Float!
+}
