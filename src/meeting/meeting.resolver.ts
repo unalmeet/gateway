@@ -3,6 +3,10 @@ import { Meeting } from './model/meeting';
 import { Meeting as ApiMeeting } from './dto/meeting';
 import { CreateMeeting } from './model/createmeeting';
 import { MeetingService } from './meeting.service';
+import { User } from './model/unmeetuser';
+import { User as ApiUser } from './dto/unmeetuser';
+import { CreateUser } from './model/createuser';
+import { UserService } from './meeting.service';
 import { NotFoundException } from '@nestjs/common';
 
 @Resolver(of => Meeting)
@@ -118,5 +122,52 @@ export class MeetingResolver {
     @Mutation(returns => Boolean)
     async removeMeeting(@Args('link') link: string): Promise<boolean> {
         return this.meetingService.remove(link);
+    }   
+}
+
+@Resolver(of => User)
+export class UserResolver{
+
+    constructor(private readonly userService: UserService) { }
+
+    @Query(returns => [User])
+    async listUsers(): Promise<User[]> {
+        const apiUserList = await this.userService.get();
+        if (!apiUserList) {
+            throw new NotFoundException();
+        }
+        let userList: User[] = [];
+        apiUserList.forEach(apiUser => {
+            let user = new User();
+            user.id = apiUser.id;
+            userList.push(user);
+        });
+        return userList;
+    }
+
+    @Query(returns => User)
+    async findUser(@Args('id') id:number): Promise<User> {
+        const apiUser = await this.userService.findByID(id);
+        if (!apiUser) {
+            throw new NotFoundException();
+        }
+        let user = new User();
+        user.id = apiUser.id;
+        return user;
+    }
+
+    @Mutation(returns => User)
+    async addUser(@Args('addUser') newUser: CreateUser): Promise<User> {
+        let apiUser = new ApiUser();
+        apiUser.id = newUser.id;
+        apiUser = await this.userService.create(apiUser);
+        let user = new User();
+        user.id = apiUser.id;
+        return user;
+    }
+
+    @Mutation(returns => Boolean)
+    async removeUser(@Args('id') id: number): Promise<boolean> {
+        return this.userService.remove(id);
     }
 }
