@@ -122,7 +122,24 @@ export class MeetingResolver {
     @Mutation(returns => Boolean)
     async removeMeeting(@Args('link') link: string): Promise<boolean> {
         return this.meetingService.remove(link);
-    }   
+    }
+
+    @Mutation(returns => Meeting)
+    async addAttendant(@Args('link') link:string, @Args('idAttendant') idAttendant: number): Promise<Meeting> {
+        let apiMeeting = this.findMeeting(link);
+        let updatedMeeting = new Meeting();
+        updatedMeeting.link = (await apiMeeting).link;
+        updatedMeeting.name = (await apiMeeting).name;
+        updatedMeeting.description = (await apiMeeting).description;
+        updatedMeeting.date_created = (await apiMeeting).date_created;
+        updatedMeeting.date_start = (await apiMeeting).date_created;
+        updatedMeeting.date_end = (await apiMeeting).date_created;
+        updatedMeeting.host = (await apiMeeting).host;
+        updatedMeeting.attendants = (await apiMeeting).attendants;
+        updatedMeeting.attendants.push(idAttendant)
+        updatedMeeting = await this.meetingService.putAttendant(updatedMeeting);
+        return updatedMeeting;
+    }
 }
 
 @Resolver(of => User)

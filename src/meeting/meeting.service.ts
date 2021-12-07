@@ -83,11 +83,25 @@ export class MeetingService {
     }
 
     async findByLink(link: string): Promise<Meeting> {
-        let response: Observable<AxiosResponse<Meeting>> = this.httpService.get(`${this.API_URL}/meetings/${link}`)
+        let response: Observable<AxiosResponse<Meeting>> = this.httpService.get(`${this.API_URL}/meetings/${link}/`)
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status !== 200) {
                     rej(new Error('Ocurrio un error al retornar datos'));
+                } else {
+                    res(list.data);
+                }
+            })
+        })
+    }
+
+    async putAttendant(data:Meeting): Promise<Meeting>{
+        let {link, name, description, date_start, date_end, host, attendants} = data;
+        let response: Observable<AxiosResponse<Meeting>> = this.httpService.put(`${this.API_URL}/meetings/${link}/`,{name, description, date_start, date_end, host, attendants})
+        return new Promise((res, rej) => {
+            response.subscribe(list => {
+                if (list.status !== 200) {
+                    rej(new Error('Ocurrio un error al añadir el asistente'));
                 } else {
                     res(list.data);
                 }
