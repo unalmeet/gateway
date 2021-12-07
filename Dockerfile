@@ -16,4 +16,7 @@ ENV PORT=3000
 ENV API_TRANSMISSION_URL="transmission_ms"
 ENV API_TRANSMISSION_PORT=8000
 
+ENV API_MEETING_URL="adminmeeting-ms"
+ENV API_MEETING_PORT=4000
+
 CMD [ "npm", "run", "start" ]
