@@ -2,6 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""meeting """
+type Meeting {
+  link: String!
+  name: String!
+  description: String!
+  date_created: DateTime!
+  date_start: DateTime!
+  date_end: DateTime!
+  host: Float!
+  attendants: [Float!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""Unmeetuser """
+type User {
+  id: Float!
+}
+
 """client """
 type Client {
   idMeeting: String!
@@ -12,14 +34,37 @@ type Client {
 
 type Query {
   listClients(token: String!): [Client!]!
+  listMeetings: [Meeting!]!
+  listMeetingsHosted(host: Float!): [Meeting!]!
+  listMeetingsAttendant(attendant: Float!): [Meeting!]!
+  findMeeting(link: String!): Meeting!
+  listUsers: [User!]!
+  findUser(id: Float!): User!
 }
 
 type Mutation {
   addClient(newClientData: CreateClient!): Client!
   removeClient(token: String!): Boolean!
+  addMeeting(addMeeting: CreateMeeting!): Meeting!
+  removeMeeting(link: String!): Boolean!
+  addUser(addUser: CreateUser!): User!
+  removeUser(id: Float!): Boolean!
 }
 
 input CreateClient {
   idMeeting: String!
   idUser: Float!
+}
+
+input CreateMeeting {
+  name: String!
+  description: String!
+  date_start: DateTime!
+  date_end: DateTime!
+  host: Float!
+  attendants: [Float!]!
+}
+
+input CreateUser {
+  id: Float!
 }

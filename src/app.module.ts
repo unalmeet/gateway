@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { TransmissionModule } from './transmission/';
 import { MeetingModule } from './meeting/';
+import { TransmissionModule } from './transmission/';
+import { WebsocketModule } from './websocket/websocket.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { MeetingModule } from './meeting/';
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
     }),
+    WebsocketModule,
   ],
   controllers: [],
   providers: [],
