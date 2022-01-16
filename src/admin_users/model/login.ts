@@ -1,10 +1,10 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateClient {
+export class LoginMDL {
     @Field()
-    idMeeting: string;
-  
+    email: string;
+    
     @Field()
-    idUser: number;
+    password: string;
 }
