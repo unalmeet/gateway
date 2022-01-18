@@ -42,6 +42,7 @@ export class Admin_userResolver {
         userDTO = await this.admin_userService.login(apiClient);
 
         let user = new ResultMDL();
+        user.id = userDTO.user.id;
         user.name = userDTO.user.name;
         user.email = userDTO.user.email;
         user.token = userDTO.token;
@@ -60,6 +61,7 @@ export class Admin_userResolver {
         userDTO = await this.admin_userService.register(usuario);
 
         let user = new ResultMDL();
+        user.id = userDTO.user.id;
         user.name = userDTO.user.name;
         user.email = userDTO.user.email;
         user.token = userDTO.token;

@@ -1,6 +1,7 @@
 export class ResultDTO{
    
     user:{
+        id:string;
         name:string;
         email:string;
         updated_at: string;
