@@ -1,10 +1,10 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import {Admin_userResolver } from './admin_users.resolver';
-import {Admin_userService } from './admin_users.service';
+import {AdminUsersResolver } from './admin_users.resolver';
+import {AdminUsersService } from './admin_users.service';
 
 @Module({
     imports: [HttpModule],
-    providers: [Admin_userResolver, Admin_userService]
+    providers: [AdminUsersResolver, AdminUsersService]
 })
 export class Admin_userModule {}
