@@ -17,20 +17,23 @@ import { NotFoundException } from '@nestjs/common';
 export class Admin_userResolver {
     constructor(private readonly admin_userService: Admin_userService) { }
 
-   /*  @Query(returns => [ResultMDL])
-    async listClients(@Args('id') id: number): Promise<ResultMDL> {
-        const apiClientList = await this.admin_userService.findById(id);
-        if (!apiClientList) {
-            throw new NotFoundException(id);
+    @Query(returns => Mesagge)
+    async show(@Args('Show') newLogout: LogoutMDL) {
+        let aux = new LogoutDTO();
+        aux.token=newLogout.token;
+
+        let M = new MesaggeDTO();
+        M = await this.admin_userService.show(aux);
+        const data={
+            data:{
+                message:"has access"
+            }
         }
-        let clientList = new ResultMDL();
-        clientList.user = apiClientList.user;
-        clientList.token = apiClientList.token;
-        clientList.result = apiClientList.result;
+        let R = new Mesagge();
+        R=data.data;
+        return R;  
         
-        
-        return clientList;
-    }  */
+    }  
 
     @Mutation(returns => ResultMDL)
     async login(@Args('loginUser') newClient: LoginMDL): Promise<ResultMDL> {
