@@ -10,7 +10,7 @@ import { MesaggeDTO } from './dto/mesagge';
 
 
 @Injectable()
-export class Admin_userService {
+export class AdminUsersService {
     private API_URL = "";
 
     constructor(private httpService: HttpService) {

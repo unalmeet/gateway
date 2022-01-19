@@ -9,10 +9,10 @@ export class CreateMeeting {
     description: string;
     
     @Field()
-    date_start: Date;
+    date_start: string;
     
     @Field()
-    date_end: Date;
+    date_end: string;
     
     @Field()
     host: number;
