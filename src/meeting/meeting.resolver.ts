@@ -106,7 +106,11 @@ export class MeetingResolver {
         apiMeeting.date_end = newMeeting.date_end;
         apiMeeting.host = newMeeting.host;
         apiMeeting.attendants = newMeeting.attendants;
-        apiMeeting = await this.meetingService.create(apiMeeting);
+        try {
+            apiMeeting = await this.meetingService.create(apiMeeting);
+        } catch (error) {
+            console.log(error);            
+        }
         let meeting = new Meeting();
         meeting.link = apiMeeting.link;
         meeting.name = apiMeeting.name;

@@ -17,14 +17,19 @@ export class MeetingService {
     }
 
     async create(data: Meeting): Promise<Meeting> {
-        let {link, name, description, date_created, date_start, date_end, host, attendants} = data;
-        let response: Observable<AxiosResponse<Meeting>> = this.httpService.post(`${this.API_URL}/meetings/`,{link, name, description, date_created, date_start, date_end, host, attendants})
+        let { link, name, description, date_created, date_start, date_end, host, attendants } = data;
+        let response: Observable<AxiosResponse<Meeting>> = this.httpService.post(`${this.API_URL}/meetings/`, { link, name, description, date_created, date_start, date_end, host, attendants })
         return new Promise((res, rej) => {
-            response.subscribe(list => {
-                if (list.status !== 201) {
-                    rej(new Error('Ocurrio un error al crear la reunion'));
-                } else {
-                    res(list.data);
+            response.subscribe({
+                next: (list) => {
+                    if (list.status !== 201) {
+                        rej(new Error('Ocurrio un error al crear la reunion'));
+                    } else {
+                        res(list.data);
+                    }
+                },
+                error: (err) => {
+                    rej(new Error('Ocurrio un error al consumir el endpoint: ' + err.toJSON()));
                 }
             })
         })
@@ -56,7 +61,7 @@ export class MeetingService {
         })
     }
 
-    async getHostedMeetings(host:number): Promise<Meeting[]> {
+    async getHostedMeetings(host: number): Promise<Meeting[]> {
         let response: Observable<AxiosResponse<Meeting[]>> = this.httpService.get(`${this.API_URL}/hostedmeetings/${host}`)
         return new Promise((res, rej) => {
             response.subscribe(list => {
@@ -69,7 +74,7 @@ export class MeetingService {
         })
     }
 
-    async getAttendedMeetings(attendant:number): Promise<Meeting[]> {
+    async getAttendedMeetings(attendant: number): Promise<Meeting[]> {
         let response: Observable<AxiosResponse<Meeting[]>> = this.httpService.get(`${this.API_URL}/attendedmeetings/${attendant}`)
         return new Promise((res, rej) => {
             response.subscribe(list => {
@@ -95,9 +100,9 @@ export class MeetingService {
         })
     }
 
-    async putAttendant(data:Meeting): Promise<Meeting>{
-        let {link, name, description, date_start, date_end, host, attendants} = data;
-        let response: Observable<AxiosResponse<Meeting>> = this.httpService.put(`${this.API_URL}/meetings/${link}/`,{name, description, date_start, date_end, host, attendants})
+    async putAttendant(data: Meeting): Promise<Meeting> {
+        let { link, name, description, date_start, date_end, host, attendants } = data;
+        let response: Observable<AxiosResponse<Meeting>> = this.httpService.put(`${this.API_URL}/meetings/${link}/`, { name, description, date_start, date_end, host, attendants })
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status !== 200) {
@@ -111,7 +116,7 @@ export class MeetingService {
 }
 
 @Injectable()
-export class UserService{
+export class UserService {
     private API_URL = "";
 
     constructor(private httpService: HttpService) {
@@ -121,8 +126,8 @@ export class UserService{
     }
 
     async create(data: User): Promise<User> {
-        let {id} = data;
-        let response: Observable<AxiosResponse<User>> = this.httpService.post(`${this.API_URL}/UNMeetUser/`,{id})
+        let { id } = data;
+        let response: Observable<AxiosResponse<User>> = this.httpService.post(`${this.API_URL}/UNMeetUser/`, { id })
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status !== 201) {
