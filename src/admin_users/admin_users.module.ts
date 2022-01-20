@@ -7,4 +7,4 @@ import {AdminUsersService } from './admin_users.service';
     imports: [HttpModule],
     providers: [AdminUsersResolver, AdminUsersService]
 })
-export class Admin_userModule {}
+export class AdminUsersModule {}
