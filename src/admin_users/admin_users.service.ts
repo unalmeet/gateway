@@ -58,12 +58,15 @@ export class AdminUsersService {
         let response: Observable<AxiosResponse<MesaggeDTO>> = this.httpService.post(`${this.API_URL}/logout`,"",{headers:headersRequest})
         return new Promise((res, rej) => {
             response.subscribe(list => {
-                if (list.status != 201) {
+                if (list.status != 200) {
                     console.log(list);
                     rej(new Error('Ocurrio un error intentar cerrar sesion'));
                 } else {
                     console.log(list);
-                    res(list.data);
+                    const data={
+                        message:"Logout seccessfull"
+                    }
+                    res(data);
                 }
             },err=>{ console.log(err);rej(err.data);})
         })
@@ -82,7 +85,10 @@ export class AdminUsersService {
             response.subscribe(list => {
                 if (list.status != 200) {
                     console.log(list)
-                    rej(new Error('Ocurrio un error'));
+                    const data={
+                        message:"Dont has access"
+                    }
+                    rej(data);
                 } else {
                     const data={
                         message:"has access"
