@@ -13,6 +13,10 @@ import { Admin_userModule } from './admin_users/';
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
     }),
     WebsocketModule,
   ],
