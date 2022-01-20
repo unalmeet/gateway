@@ -2,5 +2,5 @@
 export class Message {
     name: string;
     ms: string;
-    date: Date;
+    date: string;
 }

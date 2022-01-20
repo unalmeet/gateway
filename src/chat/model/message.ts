@@ -10,5 +10,5 @@ export class MessageChat {
     ms: string;
 
     @Field()
-    date: Date;
+    date: string;
 }

@@ -10,8 +10,22 @@ import { NotFoundException } from '@nestjs/common';
 export class ChatResolver {
     constructor(private readonly chatService: ChatService) { }
 
-    @Query(returns => MessageChat)
-    async message() {
-        return this.chatService.get();
+
+    @Query(returns => [MessageChat])
+    async message(): Promise<MessageChat[]>  {
+        const MessagesList = await this.chatService.get();
+        if (!MessagesList) {
+            throw new NotFoundException();
+        }
+        let messageReturn: MessageChat[] = [];
+        MessagesList.forEach(Message => {
+            let messagechat = new MessageChat();
+            messagechat.name = Message.name;
+            messagechat.ms = Message.ms;
+            messagechat.date = Message.date;
+           
+            messageReturn.push(messagechat);
+        });
+        return messageReturn;
     }
 }

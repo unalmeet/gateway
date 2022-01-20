@@ -10,5 +10,5 @@ export class CreateMessage {
     ms: string;
 
     @Field()
-    date: Date;
+    date: string;
 }

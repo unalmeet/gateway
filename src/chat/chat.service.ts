@@ -12,7 +12,7 @@ export class ChatService {
 
     constructor(private httpService: HttpService) {
         const url = process.env.API_CHAT_URL || 'localhost';
-        const port = process.env.API_CHAT_PORT || 3001;
+        const port = process.env.API_CHAT_PORT || 7000;
         this.API_URL = `http://${url}:${port}/api`;
     }
 
@@ -32,7 +32,7 @@ export class ChatService {
 
     async get(): Promise<Message[]> {
         // eslint-disable-next-line prefer-const
-        let response: Observable<AxiosResponse<Message[]>> = this.httpService.get(`${this.API_URL}/message/`)
+        let response: Observable<AxiosResponse<Message[]>> = this.httpService.get(`${this.API_URL}/message`)
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status !== 200) {

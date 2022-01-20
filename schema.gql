@@ -7,17 +7,12 @@ type Meeting {
   link: String!
   name: String!
   description: String!
-  date_created: DateTime!
-  date_start: DateTime!
-  date_end: DateTime!
+  date_created: String!
+  date_start: String!
+  date_end: String!
   host: Float!
   attendants: [Float!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 """Unmeetuser """
 type User {
@@ -32,8 +27,26 @@ type Client {
   token: String!
 }
 
+type MessageChat {
+  name: String!
+  ms: String!
+  date: String!
+}
+
+type Mesagge {
+  message: String!
+}
+
+type ResultMDL {
+  id: String!
+  name: String!
+  email: String!
+  token: String!
+}
+
 type Query {
   listClients(token: String!): [Client!]!
+  message: [MessageChat!]!
   listMeetings: [Meeting!]!
   listMeetingsHosted(host: Float!): [Meeting!]!
   listMeetingsAttendant(attendant: Float!): [Meeting!]!
@@ -47,8 +60,12 @@ type Mutation {
   removeClient(token: String!): Boolean!
   addMeeting(addMeeting: CreateMeeting!): Meeting!
   removeMeeting(link: String!): Boolean!
+  addAttendant(idAttendant: Float!, link: String!): Meeting!
   addUser(addUser: CreateUser!): User!
   removeUser(id: Float!): Boolean!
+  login(loginUser: LoginMDL!): ResultMDL!
+  register(registerUser: RegisterMDL!): ResultMDL!
+  logout(logoutUser: LogoutMDL!): Mesagge!
 }
 
 input CreateClient {
@@ -59,12 +76,28 @@ input CreateClient {
 input CreateMeeting {
   name: String!
   description: String!
-  date_start: DateTime!
-  date_end: DateTime!
+  date_start: String!
+  date_end: String!
   host: Float!
   attendants: [Float!]!
 }
 
 input CreateUser {
   id: Float!
+}
+
+input LoginMDL {
+  email: String!
+  password: String!
+}
+
+input RegisterMDL {
+  name: String!
+  email: String!
+  password: String!
+  password_confirmation: String!
+}
+
+input LogoutMDL {
+  token: String!
 }
