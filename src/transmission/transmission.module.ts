@@ -5,6 +5,7 @@ import { TransmissionService } from './transmission.service';
 
 @Module({
     imports: [HttpModule],
-    providers: [TransmissionResolver, TransmissionService]
+    providers: [TransmissionResolver, TransmissionService],
+    exports: [HttpModule]
 })
-export class TransmissionModule {}
+export class TransmissionModule { }

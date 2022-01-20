@@ -1,17 +1,27 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { MeetingModule } from './meeting/';
 import { TransmissionModule } from './transmission/';
 import { ChatModule } from './chat/';
+import { WebsocketModule } from './websocket/websocket.module';
+import { Admin_userModule } from './admin_users/';
 
 @Module({
   imports: [
     TransmissionModule,
     ChatModule,
+    MeetingModule,
+    Admin_userModule,
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
     }),
+    WebsocketModule,
   ],
   controllers: [],
   providers: [],
