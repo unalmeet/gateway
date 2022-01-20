@@ -59,6 +59,7 @@ export class AdminUsersService {
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status != 201) {
+                    console.log(list);
                     rej(new Error('Ocurrio un error intentar cerrar sesion'));
                 } else {
                     console.log(list);
@@ -69,18 +70,29 @@ export class AdminUsersService {
         
     }
 
-   /*  async findById(id:number ): Promise<Show> {
-        let response: Observable<AxiosResponse<Show>> = this.httpService.get(`${this.API_URL}/show/${id}`)
+     async show(data: LogoutDTO): Promise<MesaggeDTO>{
+        let {token} = data;
+        const headersRequest ={
+            'Content-Type': 'application/json',
+            'Authorization':'Bearer '+token
+        }
+        let response: Observable<AxiosResponse<MesaggeDTO>> = this.httpService.get(`${this.API_URL}/show`,{headers:headersRequest})
+        
         return new Promise((res, rej) => {
             response.subscribe(list => {
-                if (list.status !== 200) {
-                    rej(new Error('Ocurrio un error al retornar datos'));
+                if (list.status != 200) {
+                    console.log(list)
+                    rej(new Error('Ocurrio un error'));
                 } else {
-                    res(list.data);
+                    const data={
+                        message:"has access"
+                    }
+                    console.log(list);
+                    res(data);
                 }
-            })
+            },err=>{ console.log(err);rej(err.data);})
         })
-    } */
+    } 
 
 
 
