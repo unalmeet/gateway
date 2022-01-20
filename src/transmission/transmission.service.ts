@@ -16,8 +16,8 @@ export class TransmissionService {
     }
 
     async create(data: Client): Promise<Client> {
-        let {idMeeting, idUser} = data;
-        let response: Observable<AxiosResponse<Client>> = this.httpService.post(`${this.API_URL}/session`,{idMeeting, idUser})
+        let { idMeeting, idUser } = data;
+        let response: Observable<AxiosResponse<Client>> = this.httpService.post(`${this.API_URL}/session`, { idMeeting, idUser })
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status !== 201) {
@@ -57,11 +57,15 @@ export class TransmissionService {
     async findByToken(token: string): Promise<Client[]> {
         let response: Observable<AxiosResponse<Client[]>> = this.httpService.get(`${this.API_URL}/session/${token}`)
         return new Promise((res, rej) => {
-            response.subscribe(list => {
-                if (list.status !== 200) {
-                    rej(new Error('Ocurrio un error al retornar datos'));
-                } else {
-                    res(list.data);
+            response.subscribe({
+                next: (list) => {
+                    if (list.status !== 200) {
+                        rej(new Error('Ocurrio un error al retornar datos'));
+                    } else {
+                        res(list.data);
+                    }
+                }, error: (err) => {
+                    new Error('Ocurrio un error al consumir el endpoint: ' + err.toJSON())
                 }
             })
         })

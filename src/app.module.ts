@@ -14,10 +14,8 @@ import { AdminUsersModule } from './admin_users/';
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
       cors: {
-        origin: true,
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-        allowedHeaders: "Content-Type,Accept,Authorization,Access-Control-Allow-Origin",
-        credentials: true,
+        origin: '*',
+        credentials: false,
       },
     }),
     WebsocketModule,
