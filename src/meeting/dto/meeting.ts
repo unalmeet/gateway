@@ -6,11 +6,11 @@ export class Meeting {
     
     description: string;
     
-    date_created: Date;
+    date_created: string;
     
-    date_start: Date;
+    date_start: string;
 
-    date_end: Date;
+    date_end: string;
 
     host: number;
 
