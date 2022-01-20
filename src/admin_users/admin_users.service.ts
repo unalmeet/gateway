@@ -59,6 +59,7 @@ export class Admin_userService {
         return new Promise((res, rej) => {
             response.subscribe(list => {
                 if (list.status != 201) {
+                    console.log(list);
                     rej(new Error('Ocurrio un error intentar cerrar sesion'));
                 } else {
                     console.log(list);
