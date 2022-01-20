@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { Meeting } from './dto/meeting';
-import { CreateMeeting } from './model/createmeeting';
 import { User } from './model/unmeetuser';
 
 @Injectable()
@@ -29,7 +28,7 @@ export class MeetingService {
                     }
                 },
                 error: (err) => {
-                    rej(new Error('Ocurrio un error al consumir el endpoint: ' + err.toJSON()));
+                    rej(new Error('MeetingService.create - Ocurrio un error al consumir el endpoint: ' + err));
                 }
             })
         })

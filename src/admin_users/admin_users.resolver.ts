@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AdminUsersService } from './admin_users.service';
 import { LogoutDTO } from './dto/logout';
 import { MesaggeDTO } from './dto/mesagge';
@@ -20,7 +20,7 @@ export class AdminUsersResolver {
         aux.token=newLogout.token;
 
         let M = new MesaggeDTO();
-        M = await this.admin_userService.show(aux);
+        M = await this.adminUsersService.show(aux);
         const data={
             data:{
                 message:"has access"

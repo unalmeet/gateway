@@ -7,10 +7,12 @@ import { User } from './model/unmeetuser';
 import { User as ApiUser } from './dto/unmeetuser';
 import { CreateUser } from './model/createuser';
 import { UserService } from './meeting.service';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, Logger } from '@nestjs/common';
 
 @Resolver(of => Meeting)
 export class MeetingResolver {
+    private readonly logger = new Logger(MeetingResolver.name);
+
     constructor(private readonly meetingService: MeetingService) { }
 
     @Query(returns => [Meeting])
@@ -109,7 +111,7 @@ export class MeetingResolver {
         try {
             apiMeeting = await this.meetingService.create(apiMeeting);
         } catch (error) {
-            console.log(error);            
+            this.logger.error(error);            
         }
         let meeting = new Meeting();
         meeting.link = apiMeeting.link;
