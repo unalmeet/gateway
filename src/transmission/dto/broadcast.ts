@@ -1,7 +1,6 @@
+import { Blob } from 'buffer';
+
 export class Broadcast {
     token: string;
-
-    idSession: number[];
-
-    media: Int8Array;
+    media: string;
 }

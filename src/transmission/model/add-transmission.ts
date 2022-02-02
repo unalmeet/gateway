@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateClient {
+export class AddTransmission {
     @Field()
     idMeeting: string;
   

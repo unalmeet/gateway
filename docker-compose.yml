@@ -3,10 +3,14 @@ version: '3.7'
 services:
   gateway_ms:
     build: .
+    image: unalmeet/gateway
     environment:
       PORT: '5000'
     ports:
       - '5000:5000'
+    volumes:
+      - ./src/:/unalmeet-gateway/src/
+    entrypoint: "npm run start:dev"
 
 networks: 
   default: 

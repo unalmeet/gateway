@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType({ description: 'client ' })
-export class Client {
+@ObjectType({ description: 'client' })
+export class Transmission {
     @Field()
     idMeeting: string;
 
