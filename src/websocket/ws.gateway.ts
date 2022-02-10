@@ -1,12 +1,10 @@
 import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage,
-  WebSocketGateway, WebSocketServer, WsResponse
+  WebSocketGateway, WebSocketServer
 } from '@nestjs/websockets';
-import { firstValueFrom, of } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 import { Broadcast, TransmissionService } from '../transmission';
-import { Blob } from 'buffer';
 
 @WebSocketGateway({ namespace: '/ws', cors: { origin: '*' } })
 export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -18,29 +16,16 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('video')
   async handleVideo(client: Socket, payload: any): Promise<boolean> {
-    // const roomId = payload.token;
-    // try {
-    //   const broadcast = { media: null }//await this.transmissionService.processVideo();
-    //   let { media } = broadcast;
-    //   return { event: 'video', data: { roomId, media } };
-    // } catch (error) {
-    //   this.logger.error('Error procesing video', error)
-    // }
-
     const media = payload.split(',')[1];
-    //const media = new Blob(payload);
     const { token, room } = this.clientMap.get(client.id);
     const broadcast: Broadcast = { token, media };
-    let response = await this.transmissionService.broadcastVideo(broadcast);
-    
+    //let response = await this.transmissionService.broadcastVideo(broadcast);
     return this.server.to(room).emit('video', payload);
   }
 
   @SubscribeMessage('audio')
   async handleAudio(client: Socket, payload: any): Promise<boolean> {
-    //const media = new Blob(payload);
     const { token, room } = this.clientMap.get(client.id);
-    //const broadcast: Broadcast = { token, media }
     return client.to(room).emit('video', token);
   }
 
