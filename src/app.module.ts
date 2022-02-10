@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MeetingModule } from './meeting/';
 import { TransmissionModule } from './transmission/';
 import { WebsocketModule } from './websocket/websocket.module';
+import { WebsocketChatModule } from './websocket-chat/websocket.module';
 import { AdminUsersModule } from './admin_users/';
 
 @Module({
@@ -19,6 +20,7 @@ import { AdminUsersModule } from './admin_users/';
       },
     }),
     WebsocketModule,
+    WebsocketChatModule,
   ],
   controllers: [],
   providers: [],
